@@ -20,4 +20,22 @@ class OrderController extends Controller
 
         return redirect()->back()->with('success', 'Заказ успешно отправлен!');
     }
+    public function index(Request $request)
+{
+    $query = Order::query();
+
+    if ($request->search) {
+        $query->where('name', 'like', '%' . $request->search . '%')
+              ->orWhere('phone', 'like', '%' . $request->search . '%');
+    }
+
+    if ($request->status) {
+        $query->where('status', $request->status);
+    }
+
+    $orders = $query->latest()->get();
+
+    return view('orders.index', compact('orders'));
+}
+
 }

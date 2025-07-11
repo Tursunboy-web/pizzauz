@@ -1,28 +1,19 @@
 @extends('layouts.app')
 
-@section('content')
-  <h1>Заказы</h1>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Имя</th>
-        <th>Телефон</th>
-        <th>Адрес</th>
-        <th>Пицца</th>
-        <th>Дата</th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach($orders as $order)
-        <tr>
-          <td>{{ $order->name }}</td>
-          <td>{{ $order->phone }}</td>
-          <td>{{ $order->address }}</td>
-          <td>{{ $order->pizza->name }}</td>
-          <td>{{ $order->created_at->format('d.m.Y H:i') }}</td>
-        </tr>
-      @endforeach
-    </tbody>
-  </table>
-@endsection
+@section('title', 'Главная')
 
+@section('content')
+    <h1>Добро пожаловать в админку!</h1>
+    <div class="row mt-4">
+        <!-- Пример карточек -->
+        <div class="col-md-4">
+            <div class="card text-bg-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Всего заказов</h5>
+                    <p class="card-text fs-3">{{ $orderCount }}</p>
+                </div>
+            </div>
+        </div>
+        <!-- Остальные блоки аналогично -->
+    </div>
+@endsection
