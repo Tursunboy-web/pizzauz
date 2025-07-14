@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 use App\Models\Pizza;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -24,7 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $pizzas = Pizza::all(); // получаем все пиццы из базы
-    return view('home', compact('pizzas')); // передаем во view
+        $pizzas = Pizza::latest()->get(); // Получаем пиццы
+        return view('home', compact('pizzas')); // Передаём во view
     }
 }

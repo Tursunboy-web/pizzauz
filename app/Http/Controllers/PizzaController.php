@@ -4,12 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Models\Pizza;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 
 class PizzaController extends Controller
 {
-    public function index()
+  public function index(Request $request)
 {
-    $pizzas = Pizza::latest()->get();
+    $query = Pizza::query();
+
+    if ($request->has('search')) {
+        $query->where('name', 'like', '%' . $request->search . '%');
+    }
+
+    if ($request->filled('min')) {
+        $query->where('price', '>=', $request->min);
+    }
+
+    if ($request->filled('max')) {
+        $query->where('price', '<=', $request->max);
+    }
+
+    $pizzas = $query->latest()->get();
+
     return view('home', compact('pizzas'));
 }
 

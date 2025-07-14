@@ -10,6 +10,7 @@
 
     </div>
     <div class="col-md-6">
+        <a href="{{ route('home') }}" class="mb-3 btn btn-outline-secondary">← Назад к меню</a>
       <h2>{{ $pizza->name }}</h2>
       <p>{{ $pizza->description }}</p>
       <h4 class="text-danger">{{ $pizza->price }} сум</h4>
@@ -30,7 +31,7 @@
       </form>
 
       @if(session('success'))
-        <div class="alert alert-success mt-3">{{ session('success') }}</div>
+        <div class="mt-3 alert alert-success">{{ session('success') }}</div>
       @endif
     </div>
   </div>

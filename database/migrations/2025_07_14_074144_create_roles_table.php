@@ -9,12 +9,15 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+   // database/migrations/xxxx_create_roles_table.php
+public function up()
 {
-//     Schema::table('orders', function (Blueprint $table) {
-//         $table->string('status')->default('новый');
-//     });
- }
+    Schema::create('roles', function (Blueprint $table) {
+        $table->id();
+        $table->string('name'); // admin, manager, cook, courier, client
+        $table->timestamps();
+    });
+}
 
 
     /**
@@ -22,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('orders', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('roles');
     }
 };

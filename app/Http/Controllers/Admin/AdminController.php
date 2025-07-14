@@ -7,8 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Pizza;
 use App\Models\User;
-
-
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,14 +16,13 @@ class AdminController extends Controller
 {
  public function dashboard()
 {
-    return view('admin.dashboard', [
-        'orderCount' => \App\Models\Order::count(),
-        'pizzaCount' => \App\Models\Pizza::count(),
-        'userCount'  => \App\Models\User::count(),
+        return view('admin.dashboard', [
+        'orderCount' => Order::count(),
+        'pizzaCount' => Pizza::count(),
+        'userCount'  => User::count(),
     ]);
+
 }
-
-
 
   public function orders() {
     $orders = Order::with('pizza')->latest()->get();
@@ -42,12 +40,25 @@ class AdminController extends Controller
 }
 
     public function settings()
-    {
-        return view('admin.settings');
-    }
+{
+    return view('admin.settings', [
+        'admin_email' => Setting::get('admin_email'),
+        'site_name' => Setting::get('site_name'),
+        'notifications' => Setting::get('notifications', 'off'),
+    ]);
+}
 
     public function banners()
     {
         return view('admin.banners');
     }
+
+    public function saveSettings(Request $request)
+{
+    Setting::set('admin_email', $request->admin_email);
+    Setting::set('site_name', $request->site_name);
+    Setting::set('notifications', $request->has('notifications') ? 'on' : 'off');
+
+    return back()->with('success', 'Настройки сохранены!');
+}
 }

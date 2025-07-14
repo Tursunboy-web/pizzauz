@@ -9,12 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+   // database/migrations/xxxx_add_role_id_to_users_table.php
+public function up()
 {
-//     Schema::table('orders', function (Blueprint $table) {
-//         $table->string('status')->default('новый');
-//     });
- }
+    // Schema::table('users', function (Blueprint $table) {
+    //     $table->foreignId('role_id')->constrained()->default(5); // 5 = client
+    // });
+}
 
 
     /**
@@ -22,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('orders', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }
