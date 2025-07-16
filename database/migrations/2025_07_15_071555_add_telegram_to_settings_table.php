@@ -9,15 +9,14 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-   // database/migrations/xxxx_create_roles_table.php
-public function up()
+ public function up()
 {
-    Schema::create('roles', function (Blueprint $table) {
-        $table->id();
-        $table->string('name'); // admin, manager, cook, courier, client
-        $table->timestamps();
+    Schema::table('settings', function (Blueprint $table) {
+        $table->string('telegram_bot_token')->nullable();
+        $table->string('telegram_chat_id')->nullable();
     });
 }
+
 
 
     /**
@@ -25,6 +24,8 @@ public function up()
      */
     public function down(): void
     {
-        Schema::dropIfExists('roles');
+        Schema::table('settings', function (Blueprint $table) {
+            //
+        });
     }
 };

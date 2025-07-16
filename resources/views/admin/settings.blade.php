@@ -10,25 +10,21 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <form method="POST" action="{{ route('admin.settings.save') }}">
-        @csrf
+   <form action="{{ route('admin.settings.save') }}" method="POST">
+    @csrf
 
-        <div class="mb-3">
-            <label class="form-label">Email администратора</label>
-            <input type="email" name="admin_email" class="form-control" value="{{ $admin_email }}" required>
-        </div>
+    <div class="mb-3">
+        <label class="form-label">Telegram Bot Token</label>
+        <input type="text" name="telegram_bot_token" class="form-control" value="{{ $settings->telegram_bot_token ?? '' }}">
+    </div>
 
-        <div class="mb-3">
-            <label class="form-label">Название сайта</label>
-            <input type="text" name="site_name" class="form-control" value="{{ $site_name }}">
-        </div>
+    <div class="mb-3">
+        <label class="form-label">Telegram Chat ID</label>
+        <input type="text" name="telegram_chat_id" class="form-control" value="{{ $settings->telegram_chat_id ?? '' }}">
+    </div>
 
-        <div class="mb-3 form-check">
-            <input class="form-check-input" type="checkbox" name="notifications" id="notifications" {{ $notifications == 'on' ? 'checked' : '' }}>
-            <label class="form-check-label" for="notifications">Включить email-уведомления</label>
-        </div>
+    <button class="btn btn-primary">💾 Сохранить</button>
+</form>
 
-        <button type="submit" class="btn btn-primary">💾 Сохранить</button>
-    </form>
 </div>
 @endsection

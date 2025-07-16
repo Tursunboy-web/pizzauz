@@ -33,22 +33,28 @@
         }
     </style>
 </head>
+<!-- В layout.blade.php перед закрывающим </head> -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
 <body>
 <div class="d-flex">
     <!-- Sidebar -->
     @if(Auth::check() && Auth::user()->role === 'admin')
     <div class="sidebar">
-        <h4 class="py-3 text-center">🍕 PizzaUz</h4>
-        <a href="{{ route('admin.dashboard') }}">📊 Главная</a>
-        <a href="{{ route('admin.orders') }}">🛒 Заказы</a>
-        <a href="{{ route('admin.analytics') }}">📈 Аналитика</a>
-        <a href="{{ route('admin.settings') }}">⚙️ Настройки</a>
-        <a href="{{ route('admin.banners') }}">🖼️ Баннеры</a>
-        <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button type="submit">🚪 Выйти</button>
-        </form>
-    </div>
+    <a class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">📊 Главная</a>
+    <a class="{{ request()->routeIs('admin.orders') ? 'active' : '' }}" href="{{ route('admin.orders') }}">🛒 Заказы</a>
+    <a class="{{ request()->routeIs('admin.pizzas') ? 'active' : '' }}" href="{{ route('admin.pizzas') }}">🍕 Все пиццы</a>
+    <a class="{{ request()->routeIs('admin.pizzas.create') ? 'active' : '' }}" href="{{ route('admin.pizzas.create') }}">➕ Добавить пиццу</a>
+    <a class="{{ request()->routeIs('admin.analytics') ? 'active' : '' }}" href="{{ route('admin.analytics') }}">📈 Аналитика</a>
+    <a class="{{ request()->routeIs('admin.settings') ? 'active' : '' }}" href="{{ route('admin.settings') }}">⚙️ Настройки</a>
+    <a class="{{ request()->routeIs('admin.banners') ? 'active' : '' }}" href="{{ route('admin.banners') }}">🖼️ Баннеры</a>
+    <a class="{{ request()->routeIs('admin.roles.*') || request()->routeIs('admin.permissions.*') ? 'active' : '' }}" href="{{ route('admin.roles.index') }}">👮 Роли и доступ</a>
+    <form action="{{ route('logout') }}" method="POST" style="padding: 10px;">
+        @csrf
+        <button type="submit" class="btn btn-link logout-btn">🚪 Выйти</button>
+    </form>
+</div>
+
     @endif
 
     <!-- Main Content -->

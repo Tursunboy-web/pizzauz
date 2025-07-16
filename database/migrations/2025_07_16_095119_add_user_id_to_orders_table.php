@@ -7,22 +7,20 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Добавить поле `status` в таблицу `orders`.
+     * Run the migrations.
      */
-    public function up(): void
+      public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->string('status')->default('в ожидании');
+            $table->foreignId('user_id')->after('id')->constrained()->cascadeOnDelete();
         });
     }
 
-    /**
-     * Удалить поле `status` из таблицы `orders`.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->dropColumn('status');
+            $table->dropForeign(['user_id']);
+            $table->dropColumn('user_id');
         });
     }
 };

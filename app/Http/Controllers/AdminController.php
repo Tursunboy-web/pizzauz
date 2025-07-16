@@ -31,23 +31,27 @@ class AdminController extends Controller
         return view('admin.pizzas_create');
     }
 
-    public function storePizza(Request $request)
-    {
-        $data = $request->validate([
-            'name' => 'required|string',
-            'description' => 'required',
-            'price' => 'required|numeric',
-            'image' => 'nullable|image|max:2048'
-        ]);
+   public function storePizza(Request $request)
+{
+    $data = $request->validate([
+        'name' => 'required|string',
+        'description' => 'required|string',
+        'price' => 'required|numeric',
+        'image' => 'nullable|image|max:2048',
+        'is_promo' => 'nullable|boolean',
+    ]);
 
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('pizzas', 'public');
-        }
+    $data['is_promo'] = $request->has('is_promo');
 
-        Pizza::create($data);
-
-        return redirect()->route('admin.pizzas')->with('success', 'Пицца добавлена!');
+    if ($request->hasFile('image')) {
+        $data['image'] = $request->file('image')->store('pizzas', 'public');
     }
+
+    Pizza::create($data);
+
+    return redirect()->route('admin.pizzas')->with('success', 'Пицца добавлена!');
+}
+
 
 public function editPizza(Pizza $pizza)
 {

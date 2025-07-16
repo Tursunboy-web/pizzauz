@@ -3,18 +3,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Order;
 
 class ProfileController extends Controller
 {
     public function index()
     {
-        $orders = Order::with('pizza')
-            ->where('user_id', Auth::id())
-            ->latest()
-            ->get();
+        $user = Auth::user();
+        $orders = $user->orders()->with('pizza')->latest()->paginate(10);
 
-        return view('profile', compact('orders'));
+        return view('profile.index', compact('orders'));
     }
 }
-
